@@ -21,18 +21,52 @@ public class PlayerControllerScript : MonoBehaviour
 
 
     public GameObject SparkTrails; 
-    private float currentSpeed;
+    public float currentSpeed;
+    public Animator PlayerAnimator;
+  
+    public SpriteRenderer sprite; 
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerAnimator.SetBool("IsAdult", true);
+        PlayerAnimator.SetBool("IsRunning", false); 
+        sprite.flipX = false; 
         isGrounded = false;
         rb = GetComponent<Rigidbody2D>();
+        PlayerAnimator = GetComponent<Animator>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            PlayerAnimator.SetBool("IsRunning", true); 
+            sprite.flipX = false; 
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) 
+        
+        {
+            PlayerAnimator.SetBool("IsRunning", true);
+            sprite.flipX = true;              
+        
+        }
+
+        if (currentSpeed != 0)
+        {
+            PlayerAnimator.SetBool("IsRunning", true);
+
+        }
+        else 
+        {
+            PlayerAnimator.SetBool("IsRunning", false);
+
+        }
+
+
         // Check for movement input and set velocity accordingly
         float horizontalInput = Input.GetAxis("Horizontal");
 
@@ -85,30 +119,55 @@ private void OnDrawGizmosSelected()
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PastTrigger") && (isMaxSpeed == true)) 
+        if (collision.CompareTag("AdultTrigger") && (isMaxSpeed == true)) 
         {
-            TriggerPast(); 
-        
+            TriggerAdult();
         }
 
-        if (collision.CompareTag("FutureTrigger") && (isMaxSpeed == true)) 
+        if (collision.CompareTag("TeenTrigger") && (isMaxSpeed == true)) 
         {
-            TriggerFuture(); 
+            TriggerTeen();             
         }
+
+        if (collision.CompareTag("KidTrigger") && (isMaxSpeed == true))
+        {
+            TriggerKid(); 
+        }
+
+
     }
 
-    public void TriggerPast() 
+    public void TriggerAdult() 
     {
         //[Insert Code For Going To The Past Here] e.g change of scenery, change of character sprites and animation
 
-        Debug.Log("Past"); 
+        Debug.Log("Adult Form!");
+        PlayerAnimator.SetBool("IsAdult", true);
+        PlayerAnimator.SetBool("IsKid", false);
+        PlayerAnimator.SetBool("IsTeen", false);
+
     }
 
-    public void TriggerFuture() 
+    public void TriggerTeen() 
     {
 
+        PlayerAnimator.SetBool("IsAdult", false);
+        PlayerAnimator.SetBool("IsKid", false);
+        PlayerAnimator.SetBool("IsTeen", true);
 
 
-        Debug.Log("Future");
+        Debug.Log("Teen Form!");
+    }
+
+    public void TriggerKid() 
+    {
+
+        PlayerAnimator.SetBool("IsAdult", false);
+        PlayerAnimator.SetBool("IsKid", true);
+        PlayerAnimator.SetBool("IsTeen", false);
+
+        Debug.Log("Kid Form!"); 
+    
+    
     }
 }

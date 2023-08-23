@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PastTrigger
-  - FutureTrigger
-  - NowTrigger
+  - AdultTrigger
+  - KidTrigger
+  - TeenTrigger
   layers:
   - Default
   - TransparentFX
