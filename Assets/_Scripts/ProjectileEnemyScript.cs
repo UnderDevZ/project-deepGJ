@@ -4,38 +4,82 @@ using UnityEngine;
 
 public class ProjectileEnemyScript : MonoBehaviour
 {
-
     public GameObject enemyProjectile;
     public Transform projectilePos;
 
     public float timer;
-    public float cooldown; 
+    public float cooldown;
 
-    // Start is called before the first frame update
-    void Start()
+    public float detectionRange = 10f;
+
+    private GameObject player;
+    private SpriteRenderer spriteRenderer;
+    private bool isFacingRight = true;
+
+    public Animator GunAnim; 
+
+    private void Start()
     {
-        
+        GunAnim.SetBool("IsShooting", false);
+        player = GameObject.FindGameObjectWithTag("Player");
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > cooldown)
+        if (timer > cooldown && player != null)
         {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            timer = 0;
-            Shoot();
+            if (distanceToPlayer <= detectionRange)
+            {
+                GunAnim.SetBool("IsShooting", true); 
+                if (player.transform.position.x > transform.position.x && !isFacingRight)
+                {
+                    Flip();
+                }
+                else if (player.transform.position.x < transform.position.x && isFacingRight)
+                {
+                    Flip();
+                }
 
+                timer = 0;
+                Shoot();
+            }
         }
     }
 
-    public void Shoot() 
-    
+    private void OnDrawGizmosSelected()
     {
-        Instantiate(enemyProjectile, projectilePos.position, Quaternion.identity); 
-
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
+    private void Flip()
+    {
 
+        isFacingRight = !isFacingRight;
+
+        // Flip the enemy's sprite horizontally
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+
+        // Adjust the local position of the projectilePos
+        Vector3 projectilePosLocalPosition = projectilePos.localPosition;
+        projectilePosLocalPosition.x *= -1;
+        projectilePos.localPosition = projectilePosLocalPosition;
+
+        // Adjust the local position based on the enemy's scale
+        if (!isFacingRight)
+        {
+            projectilePos.localPosition = new Vector3(-projectilePos.localPosition.x, projectilePos.localPosition.y, projectilePos.localPosition.z);
+        }
+    }
+
+    private void Shoot()
+    {
+        Instantiate(enemyProjectile, projectilePos.position, Quaternion.identity);
+    }
 }

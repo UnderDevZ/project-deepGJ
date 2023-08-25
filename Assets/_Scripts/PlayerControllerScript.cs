@@ -25,7 +25,12 @@ public class PlayerControllerScript : MonoBehaviour
     public Animator PlayerAnimator;
   
     public SpriteRenderer sprite;
-    public GameManager GM; 
+    public GameManager GM;
+
+
+    public float knockbackForce = 10f;
+    public float knockbackDuration = 0.5f;
+    public float knockbackTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -121,6 +126,7 @@ private void OnDrawGizmosSelected()
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("AdultTrigger") && (isMaxSpeed == true)) 
         {
             TriggerAdult();
@@ -141,8 +147,24 @@ private void OnDrawGizmosSelected()
 
             GM.health = GM.health - 1;
         }
+        if (collision.CompareTag("Hurtbox"))
+        {
+            GM.health = GM.health - 1;
 
+            Vector2 knockbackDirection = new Vector2(0f, 1f); // Define your knockback direction
+            ApplyKnockback(knockbackDirection);
+        }
 
+    }
+    public void ApplyKnockback(Vector2 direction)
+    {
+        if (knockbackTimer <= 0)
+        {
+           rb.velocity = Vector2.zero;  // Stop any current movement
+           rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
+            knockbackTimer = knockbackDuration;
+            Invoke("ResetKnockback", 1f); 
+        }
     }
 
     public void TriggerAdult() 
@@ -177,5 +199,10 @@ private void OnDrawGizmosSelected()
         Debug.Log("Kid Form!"); 
     
     
+    }
+    public void ResetKnockback()
+    {
+
+        knockbackTimer = 0f; 
     }
 }
