@@ -24,11 +24,13 @@ public class PlayerControllerScript : MonoBehaviour
     public float currentSpeed;
     public Animator PlayerAnimator;
   
-    public SpriteRenderer sprite; 
+    public SpriteRenderer sprite;
+    public GameManager GM; 
 
     // Start is called before the first frame update
     void Start()
     {
+        sprite.enabled = true;
         PlayerAnimator.SetBool("IsAdult", true);
         PlayerAnimator.SetBool("IsRunning", false); 
         sprite.flipX = false; 
@@ -41,13 +43,13 @@ public class PlayerControllerScript : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || (Input.GetKeyDown(KeyCode.RightArrow)))
         {
             PlayerAnimator.SetBool("IsRunning", true); 
             sprite.flipX = false; 
         }
 
-        if (Input.GetKeyDown(KeyCode.A)) 
+        if (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.LeftArrow))) 
         
         {
             PlayerAnimator.SetBool("IsRunning", true);
@@ -132,6 +134,12 @@ private void OnDrawGizmosSelected()
         if (collision.CompareTag("KidTrigger") && (isMaxSpeed == true))
         {
             TriggerKid(); 
+        }
+
+        if (collision.CompareTag("EnemyProjectile"))
+        {
+
+            GM.health = GM.health - 1;
         }
 
 
