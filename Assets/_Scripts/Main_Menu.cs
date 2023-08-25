@@ -7,7 +7,7 @@ public class Main_Menu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Intro Cutscene");
         Debug.Log("Loading Level 1");
     }
 
