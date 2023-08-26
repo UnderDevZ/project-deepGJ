@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     public void GameOverScreen() 
     {
 
-        SceneManager.LoadScene("GameOver");
+       // SceneManager.LoadScene("GameOver");
         particle.Pause(); 
     }
     public void MainMenuScreen()

@@ -118,6 +118,7 @@ MonoBehaviour:
   force: 10
   self: {fileID: 302372149761810841}
   GM: {fileID: 0}
+  playerController: {fileID: 4326015179723158708, guid: 7e09dd70accf5d145882a1b5d4271a9d, type: 3}
 --- !u!50 &302372149761810838
 Rigidbody2D:
   serializedVersion: 4

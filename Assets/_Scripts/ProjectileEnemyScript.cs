@@ -16,7 +16,8 @@ public class ProjectileEnemyScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isFacingRight = true;
 
-    public Animator GunAnim; 
+    public Animator GunAnim;
+    
 
     private void Start()
     {

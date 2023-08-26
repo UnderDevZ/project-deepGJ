@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyType1 : MonoBehaviour
 {
+   
+   
+    public PlayerControllerScript playerController; 
+
+
     public float moveSpeed;
     public float detectRange;
     public float attackRange;
@@ -21,6 +26,8 @@ public class EnemyType1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
         SlamHurtBox.SetActive(false); 
         BigAnim = GetComponent<Animator>();
         enemyRB = GetComponent<Rigidbody2D>();
@@ -30,6 +37,9 @@ public class EnemyType1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+
+
         if (IsFacingRight())
         {
             enemyRB.velocity = new Vector2(moveSpeed, enemyRB.velocity.y);
@@ -108,7 +118,10 @@ public class EnemyType1 : MonoBehaviour
         canAttack = true;
     }
 
-    private void OnDrawGizmosSelected()
+
+   
+
+        private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectRange);
@@ -119,4 +132,6 @@ public class EnemyType1 : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(new Vector3(flipLine.position.x, -1000f, 0f), new Vector3(flipLine.position.x, 1000f, 0f));
     }
+
+
 }
