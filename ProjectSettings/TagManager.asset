@@ -8,6 +8,7 @@ TagManager:
   - KidTrigger
   - TeenTrigger
   - EnemyProjectile
+  - Hurtbox
   layers:
   - Default
   - TransparentFX

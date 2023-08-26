@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 5
   self: {fileID: 2582341563370020863}
-  GameManager: {fileID: 0}
+  GM: {fileID: 0}
 --- !u!50 &2582341563370020848
 Rigidbody2D:
   serializedVersion: 4
