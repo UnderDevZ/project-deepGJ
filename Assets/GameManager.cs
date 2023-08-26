@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+   
     public GameObject heart1, heart2, heart3;
     public int health;
     public PlayerControllerScript playerController;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         particle.Pause(); 
         playerController.sprite.enabled = true; 
         health = 3;
@@ -28,7 +30,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health < 0)
+
+       
+        if (health < 0)
         {
             heart1.gameObject.SetActive(false);
             heart2.gameObject.SetActive(false);
@@ -78,7 +82,14 @@ public class GameManager : MonoBehaviour
         }
 
     }
+   
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene("Level 1"); 
 
+
+
+    }
     public void GameOverScreen() 
     {
 
@@ -87,7 +98,7 @@ public class GameManager : MonoBehaviour
     }
     public void MainMenuScreen()
     {
-
+        SceneManager.LoadScene("Main Menu"); 
 
     }
 }
